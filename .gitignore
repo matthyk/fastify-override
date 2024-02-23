@@ -1,0 +1,14 @@
+logs
+*.log
+npm-debug.log*
+lib-cov
+coverage
+*.lcov
+.nyc_output
+node_modules/
+.npm
+.eslintcache
+.idea/
+.tap/
+.DS_Store
+package-lock.json

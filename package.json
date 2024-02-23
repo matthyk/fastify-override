@@ -1,0 +1,51 @@
+{
+  "name": "fastify-override",
+  "version": "1.0.0",
+  "description": "Fastify plugin to override decorators, plugins and hooks",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "type": "commonjs",
+  "scripts": {
+    "test:unit": "tap test/**/*.test.js test/**/*.test.ts test/**/*.test.mjs",
+    "test:typescript": "tsd",
+    "test": "npm run test:unit && npm run test:typescript",
+    "lint": "standard",
+    "lint:fix": "standard --fix"
+  },
+  "keywords": [
+    "fastify",
+    "plugin",
+    "fastify-plugin",
+    "testing",
+    "override",
+    "mock",
+    "spy",
+    "intercept",
+    "encapsulation",
+    "context"
+  ],
+  "author": "Matthias J. Keckl",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "homepage": "",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "fastify-plugin": "^4.5.1"
+  },
+  "devDependencies": {
+    "@fastify/autoload": "^5.8.0",
+    "@types/node": "^20.11.19",
+    "fastify": "^4.26.1",
+    "standard": "^17.1.0",
+    "tap": "^18.7.0",
+    "tsd": "^0.30.5"
+  },
+  "tsd": {
+    "directory": "test/types"
+  }
+}
