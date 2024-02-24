@@ -256,3 +256,90 @@ t.test('override hooks', async t => {
     t.equal(onRequest.calls.length, 2)
   })
 })
+
+t.test('decorator and hook override has priority over plugin', async t => {
+  const first = t.captureFn(async () => {})
+  const second = t.captureFn(async () => {})
+  const third = t.captureFn(async () => {})
+  const plg = fp(async app => {
+    app.decorate('foo', 10)
+    app.addHook('onRequest', second)
+
+    app.get('/', async () => {})
+  }, { name: 'plg' })
+
+  const app = Fastify()
+
+  await app.register(fastifyOverride, {
+    override: {
+      plugins: {
+        plg: fp(async app => {
+          app.decorate('foo', 20)
+          app.addHook('onRequest', third)
+          app.get('/', async () => {})
+        })
+      },
+      decorators: {
+        decorate: {
+          foo: 30
+        }
+      },
+      hooks: {
+        onRequest: first
+      }
+    }
+  })
+
+  app.register(plg)
+
+  await app.inject({
+    url: '/',
+    method: 'GET'
+  })
+
+  t.equal(app.foo, 30)
+  t.equal(first.calls.length, 1)
+  t.equal(second.calls.length, 0)
+  t.equal(third.calls.length, 0)
+
+  await app.close()
+})
+
+t.test('only override in current context', async t => {
+  const first = t.captureFn(async () => {})
+  const second = t.captureFn(async () => {})
+  const third = t.captureFn(async () => {})
+
+  const app = Fastify()
+
+  app.addHook('onRequest', third)
+
+  app.get('/a', async () => {})
+
+  app.register(async instance => {
+    await instance.register(fastifyOverride, {
+      override: {
+        hooks: {
+          onRequest: first
+        }
+      }
+    })
+
+    instance.addHook('onRequest', second)
+
+    instance.get('/b', async () => {})
+  })
+
+  await app.inject({
+    url: '/a',
+    method: 'GET'
+  })
+  await app.inject({
+    url: '/b',
+    method: 'GET'
+  })
+
+  t.equal(first.calls.length, 1)
+  t.equal(second.calls.length, 0)
+  t.equal(third.calls.length, 2)
+})
