@@ -1,5 +1,7 @@
 # fastify-override
 
+![ci](https://github.com/matthyk/fastify-override/actions/workflows/ci.yml/badge.svg)
+
 Override any plugins, decorators and hooks in your Fastify application. This is useful for mocking specific 
 functionalities when testing your application. For the motivation of this plugin see [here](#why-is-this-plugin-useful).
 
