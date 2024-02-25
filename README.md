@@ -1,13 +1,12 @@
 # fastify-override
 
-![ci](https://github.com/matthyk/fastify-override/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/matthyk/fastify-override/actions/workflows/ci.yml/badge.svg)
 ![CodeQL](https://github.com/matthyk/fastify-override/actions/workflows/codeql.yml/badge.svg)
 
-
-Override any plugins, decorators and hooks in your Fastify application. This is useful for mocking specific 
+Override any plugin, decorator or hook in your Fastify application. This is useful for mocking specific 
 functionalities when testing your application. For the motivation of this plugin see [here](#why-is-this-plugin-useful).
 
-> You should use this plugin only for testing purposes.
+> Note: You should use this plugin only for testing purposes.
 
 ## Install
 
@@ -19,11 +18,133 @@ npm install fastify-override --save-dev
 
 | Plugin Version | Fastify Version | Node Versions |
 |----------------|:---------------:|---------------|
-| 1.x            | 4.x             | 16, 18        |
+| 1.x            |       4.x       | 18, 20        |
 
 ## Usage
 
-TODO
+This plugin allows you to override specific plugins, decorators and hooks within the plugin hierarchy. This can happen 
+from any level within the hierarchy, and you can also register this plugin multiple times. But as soon as the plugin is 
+to be used, the register call must be awaited so that all subsequently added plugins, decorators and hooks are considered.
+
+```js
+
+app.decorate('foo', 'bar')
+
+await app.register(fastifyOverride, {
+  override: {
+    decorators: {
+      decorate: {
+        foo: 'overridden',
+        num: 42
+      }
+    }
+  }
+})
+
+app.decorate('num', 1)
+
+app.foo // === 'bar'
+app.num // === 42
+```
+
+As you can see above, only the decorators (and of course plugins and hooks) that were added after the plugin was 
+registered are actually taken into account. There are some differences in the way the plugins, decorators and hooks are 
+overridden. We will therefore briefly look at these 3 separately.
+
+### Override Plugins
+
+Only plugins that have been assigned a name with `fastify-plugin` can be overridden. This name can then be used to 
+specify which plugins should be used to override it.
+
+```
+const plg = fp(async app => {}, {
+  name: 'myPlugin' // <-- Therefore, this must match with...
+})
+
+await app.register(fastifyOverride, {
+  override: {
+    plugins: {
+      myPlugin: fp(async () => {}) // ...this name
+    }
+  }
+})
+```
+
+Keep in mind that the encapsulation behavior of the plugin can also be changed by using or not using `fastify-plugin`.
+
+### Override Decorators
+
+Decorators are identified by their name and type. Therefore, the plugin with the following options
+
+```js
+{
+  override: {
+    decorators: {
+      decorateReply: {
+        num: 1
+      }
+    }
+  }
+}
+```
+would override `app.decorateReply('sendHtml', 2)` but not `app.decorateRequest('sendHtml', 3)`.
+
+### Override Hooks
+
+For each [hook type](https://fastify.dev/docs/latest/Reference/Hooks/), you can provide one function. This function then 
+overrides all hooks of this type. This can of course lead to different hook functions being overridden with the same function.
+Please note that only hooks that have been added via the `addHook` API are being checked.
+
+## Options
+
+The following options are available.
+
+```js
+import Fastify from 'fastify'
+
+const app = Fastify()
+
+await app.register(import('fastify-override'), {
+  override: {
+    plugins: {},
+    decorators: {
+      decorate: {},
+      decorateRequest: {},
+      decorateReply: {}
+    },
+    hooks: {}
+  }
+})
+```
+
+### override
+
+Use the `override` object to specify which decorators, which plugins and which hooks are to be overwritten.
+
+```js
+import Fastify from 'fastify'
+
+const app = Fastify()
+
+await app.register(import('fastify-override'), {
+  override: {
+    plugins: {
+      '@fastifyPostgres': async app => {}
+    },
+    decorators: {
+      decorate: {
+        db: {
+          query: async () => {}
+        } 
+      }
+    },
+    hooks: {
+      onRequest: async (req, reply) => {}
+    }
+  }
+})
+```
+
 
 ## Why is this plugin useful?
 
@@ -124,7 +245,7 @@ t.test('test users routes', async t => {
       },
       decorators: {
         decorate: {
-          // ...or just selected decorators 
+          // ...or just specific decorators 
           pg: {
             query: () => 'mocked value'
           }
@@ -141,5 +262,5 @@ t.test('test users routes', async t => {
 })
 ```
 
-As we can see, this plugin allows us to overwrite entire plugins or just selected decorators. Thereby it does not matter 
+As we can see, this plugin allows us to overwrite entire plugins or just specific decorators. Thereby it does not matter 
 how deep in the plugin hierarchy the plugin and/or the decorators are registered.
