@@ -7,11 +7,11 @@ on:
       - next
       - 'v*'
     paths-ignore:
-      - '*.md'
+      - '**/*.md'
       - '.github/'
   pull_request:
     paths-ignore:
-      - '*.md'
+      - '**/*.md'
 
   workflow_dispatch:
 
