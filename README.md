@@ -275,3 +275,7 @@ t.test('test users routes', async t => {
 
 As we can see, this plugin allows us to overwrite entire plugins or just specific decorators. Thereby it does not matter 
 how deep in the plugin hierarchy the plugin and/or the decorators are registered.
+
+## License
+
+Licensed under [MIT](./LICENSE).
