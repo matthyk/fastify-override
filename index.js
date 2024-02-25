@@ -1,3 +1,5 @@
+'use strict'
+
 const fp = require('fastify-plugin')
 
 // See https://github.com/fastify/fastify-plugin/blob/4a11ccc90df16b196e3f4746a5321938a87283f2/plugin.js#L46
