@@ -56,7 +56,7 @@ overridden. We will therefore briefly look at these 3 separately.
 Only plugins that have been assigned a name with `fastify-plugin` can be overridden. This name can then be used to 
 specify which plugins should be used to override it.
 
-```
+```js
 const plg = fp(async app => {}, {
   name: 'myPlugin' // <-- Therefore, this must match with...
 })
