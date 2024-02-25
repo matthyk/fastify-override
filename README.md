@@ -54,7 +54,7 @@ overridden. We will therefore briefly look at these 3 separately.
 ### Override Plugins
 
 Only plugins that have been assigned a name with `fastify-plugin` can be overridden. This name can then be used to 
-specify which plugins should be used to override it.
+specify which plugin should be used to override it.
 
 ```js
 const plg = fp(async app => {}, {
@@ -87,13 +87,24 @@ Decorators are identified by their name and type. Therefore, the plugin with the
   }
 }
 ```
-would override `app.decorateReply('sendHtml', 2)` but not `app.decorateRequest('sendHtml', 3)`.
+would override `app.decorateReply('num', 2)` but not `app.decorateRequest('num', 3)`.
 
 ### Override Hooks
 
 For each [hook type](https://fastify.dev/docs/latest/Reference/Hooks/), you can provide one function. This function then 
 overrides all hooks of this type. This can of course lead to different hook functions being overridden with the same function.
 Please note that only hooks that have been added via the `addHook` API are being checked.
+
+```js
+await app.register(fastifyOverride, {
+  override: {
+    hooks: {
+      onRequest: async () => {},
+      onSend: async () => {}
+    }
+  }
+})
+```
 
 ## Options
 
