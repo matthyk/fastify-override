@@ -26,11 +26,11 @@
   ],
   "author": "Matthias J. Keckl",
   "license": "MIT",
+  "homepage": "https://github.com/matthyk/fastify-override#readme",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/matthyk/fastify-override.git"
   },
-  "homepage": "",
   "engines": {
     "node": ">=18"
   },
