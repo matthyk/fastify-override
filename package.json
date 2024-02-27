@@ -24,15 +24,12 @@
     "encapsulation",
     "context"
   ],
-  "author": "Matthias J. Keckl",
+  "author": "Matthias J. Keckl <matthyk.dev@gmail.com>",
   "license": "MIT",
   "homepage": "https://github.com/matthyk/fastify-override#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/matthyk/fastify-override.git"
-  },
-  "engines": {
-    "node": ">=18"
+    "url": "git+https://github.com/matthyk/fastify-override.git"
   },
   "dependencies": {
     "fastify-plugin": "^4.5.1"
