@@ -1,6 +1,6 @@
 {
   "name": "fastify-override",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Fastify plugin to override decorators, plugins and hooks",
   "main": "index.js",
   "types": "index.d.ts",
