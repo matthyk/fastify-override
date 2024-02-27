@@ -18,13 +18,16 @@ npm install fastify-override --save-dev
 
 | Plugin Version | Fastify Version | Node Versions |
 |----------------|:---------------:|---------------|
-| 1.x            |       4.x       | 18, 20        |
+| 1.x            |       4.x       | 18, 20, 21    |
 
 ## Usage
 
 This plugin allows you to override specific plugins, decorators and hooks within the plugin hierarchy. This can happen 
 from any level within the hierarchy, and you can also register this plugin multiple times. But as soon as the plugin is 
 to be used, the register call must be awaited so that all subsequently added plugins, decorators and hooks are considered.
+
+> Note: Only plugins that are not registered as promise are supported. `app.register(import('...'))` would result in 
+> incorrect behaviour. If this occurs, the plugin will log a message accordingly.
 
 ```js
 
