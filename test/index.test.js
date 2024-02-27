@@ -254,6 +254,7 @@ t.test('override hooks', async t => {
     await app.close()
 
     t.equal(onRequest.calls.length, 2)
+    t.equal(onClose.calls.length, 0)
   })
 })
 
