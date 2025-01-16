@@ -75,7 +75,7 @@ async function fastifyOverride (app, opts = {}) {
 
 const plugin = fp(fastifyOverride, {
   name: 'fastify-override',
-  fastify: '4.x'
+  fastify: '5.x'
 })
 
 module.exports = plugin
