@@ -19,6 +19,7 @@ npm install fastify-override --save-dev
 | Plugin Version | Fastify Version | Node Versions |
 |----------------|:---------------:|---------------|
 | 1.x            |       4.x       | 18, 20, 21    |
+| 2.x            |       5.x       | 20, 22        |
 
 ## Usage
 

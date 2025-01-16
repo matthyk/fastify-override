@@ -32,12 +32,12 @@
     "url": "git+https://github.com/matthyk/fastify-override.git"
   },
   "dependencies": {
-    "fastify-plugin": "^4.5.1"
+    "fastify-plugin": "^5.0.1"
   },
   "devDependencies": {
-    "@fastify/autoload": "^5.8.0",
-    "@types/node": "^22.7.4",
-    "fastify": "^4.26.1",
+    "@fastify/autoload": "^6.0.3",
+     "@types/node": "^22.7.4",
+    "fastify": "^5.2.1",
     "standard": "^17.1.0",
     "tap": "^21.0.1",
     "tsd": "^0.31.0"

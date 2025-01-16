@@ -25,19 +25,19 @@ t.test('ecmascript modules', async t => {
   })
 
   t.test('should print debug log for promise like plugin fn', async t => {
-    const logger = {
+    const loggerInstance = {
       debug: (msg) => {},
       info: (msg) => {},
       error: (msg) => {},
       fatal: (msg) => {},
       warn: (msg) => {},
       trace: (msg) => {},
-      child: () => logger
+      child: () => loggerInstance
     }
 
-    const debugLog = t.capture(logger, 'debug')
+    const debugLog = t.capture(loggerInstance, 'debug')
 
-    const app = Fastify({ logger })
+    const app = Fastify({ loggerInstance })
 
     await app.register(fastifyOverride)
 
