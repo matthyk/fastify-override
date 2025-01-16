@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@fastify/autoload": "^6.0.3",
-    "@types/node": "^20.11.19",
+     "@types/node": "^22.7.4",
     "fastify": "^5.2.1",
     "standard": "^17.1.0",
     "tap": "^21.0.1",
