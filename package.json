@@ -1,6 +1,6 @@
 {
   "name": "fastify-override",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Fastify plugin to override decorators, plugins and hooks",
   "main": "index.js",
   "types": "index.d.ts",
@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@fastify/autoload": "^6.0.3",
-     "@types/node": "^22.7.4",
+    "@types/node": "^22.7.4",
     "fastify": "^5.2.1",
     "standard": "^17.1.0",
     "tap": "^21.0.1",
